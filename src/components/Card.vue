@@ -6,7 +6,9 @@
         <img :src="data.owner.avatar_url" class="itemCard__img">
         <h4 class="itemCard__title mt-3 mb-0" v-text="data.name"></h4>
         <small class="itemCard__ mt-0">by</small>
-        <h6 class="itemCard__owner secondaryColor" v-text="data.owner.login" ></h6>
+        <a :href="data.owner.html_url" class="d-block secondaryColor">
+            {{data.owner.login}}
+        </a>
         <hr>
         <div class="itemCard__description">
             <p v-text="data.description"></p>
