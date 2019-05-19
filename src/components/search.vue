@@ -1,8 +1,10 @@
 <template>
   <div class="search">
     <form class="w-100 d-flex align-items-center  " @submit.prevent="searchRepo">
-      <input type="search" name="search" id="searchRepo" v-model="searchValue" class="w-100 search__input" placeholder="Search repo">
-      <button type="submit" class="search__btn ml-1"><i class="fas fa-search"></i></button>
+      <input type="search" name="search" id="searchRepo" v-model="searchValue" class="w-100 search__input" placeholder="Search repo" :disabled="loading">
+      <button type="submit" class="search__btn ml-1" :disabled="loading">
+        <i class="fas " :class="loading ? 'fa-spinner fa-spin':'fa-search' "></i>
+      </button>
     </form>
   </div>
 </template>
@@ -13,15 +15,19 @@ export default {
   name: 'Search',
   data(){
     return{
-      searchValue: "vue"
+      searchValue: "vue",
+      loading: false
     }
   },
   mounted(){},
   methods:{
     searchRepo(){
+      if(this.loading)return;
+      this.loading = true;
       axios.get(`https://api.github.com/search/repositories?q=${this.searchValue}`)
       .then(res=>{
         let {data:{items}} = res;
+        this.loading = false;
         this.$store.commit('setRepos', items)
       }).catch(err=>{
         console.log(err)

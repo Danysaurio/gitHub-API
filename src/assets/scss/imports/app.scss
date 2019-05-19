@@ -1,3 +1,11 @@
+@import "./variables.scss";
 body{
     background-color: #eaebed;
+}
+
+.mainColor{
+    color: $mainColor;
+}
+.secondaryColor{
+    color: $secondaryColor;
 }
