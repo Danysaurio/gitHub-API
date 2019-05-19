@@ -1,13 +1,22 @@
 <template>
   <div class="header">
       <img src="../assets/Octocat.png" alt="Logo gitHub" class="header__logo">
-      <h1 class="header__title">Search Github</h1>
+      <h1 class="header__title mb-4">Search Github</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <Search></Search>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
+import Search from './search'
 export default {
   name: 'Header',
+  components:{
+    Search
+  }
 }
 </script>
 
