@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script>
+<script> 
 import axios from "axios";
 export default {
   name: 'Search',
@@ -28,9 +28,21 @@ export default {
       .then(res=>{
         let {data:{items}} = res;
         this.loading = false;
+        if(items.length == 0){
+          this.$swal({
+            type: 'info',
+            title: 'Oops...',
+            text: "We can't find repositories with that name",
+          });
+        }
         this.$store.commit('setRepos', items)
-      }).catch(err=>{
-        console.log(err)
+      }).catch(()=>{
+         this.$swal({
+            type: 'error',
+            title: 'Oops...',
+            text: "Something went wrong!",
+          });
+
       })
     }
   }

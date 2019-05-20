@@ -82,8 +82,12 @@ export default {
         axios.get(`https://api.github.com/repos/${this.selectRepo.owner.login}/${this.selectRepo.name}/branches`)
         .then(res=>{
             this.branches = res.data.map(branch=>branch.name)
-        }).catch(err=>{
-            console.log(err)
+        }).catch(()=>{
+            this.$swal({
+                type: 'error',
+                title: 'Oops...',
+                text: "Something went wrong!",
+            });
         })
       }, 
       getCommits(){
@@ -92,8 +96,13 @@ export default {
         .then(res=>{
             this.commits = res.data;
             this.loading = false
-        }).catch(err=>{
-            console.log(err)
+        }).catch(()=>{
+            this.loading = false
+             this.$swal({
+                type: 'error',
+                title: 'Oops...',
+                text: "Something went wrong!",
+            });
         })
       },
       cutIdCommit(id){
