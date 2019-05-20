@@ -1,6 +1,11 @@
 <template>
   <div class="repoModal d-flex justify-content-center align-items-center" >
-      <div class="repoModal__box">
+      <div class="loading" v-if="loading">
+          <div>
+            <i class="fa fa-spinner fa-pulse"></i>
+          </div>
+      </div>
+      <div class="repoModal__box" :class="{blur:loading}">
           <div class="repoModal__header">
               <h3 class="repoModal__title mb-0">{{selectRepo.full_name}}</h3>
               <button class="repoModal__header__close" @click="closeModal"><i class="fa fa-times"></i></button>
@@ -59,7 +64,8 @@ export default {
       return{
           branches: [],
           selectBranch:'',
-          commits:undefined
+          commits:undefined,
+          loading: true
       }
   },
   mounted(){
@@ -81,10 +87,11 @@ export default {
         })
       }, 
       getCommits(){
+        this.loading = true;
         axios.get(`https://api.github.com/repos/${this.selectRepo.owner.login}/${this.selectRepo.name}/commits?sha=${this.selectBranch}`)
         .then(res=>{
-            console.info(res.data);
             this.commits = res.data;
+            this.loading = false
         }).catch(err=>{
             console.log(err)
         })
@@ -109,6 +116,22 @@ export default {
 
 <style  lang="scss">
 @import '../assets/scss/imports/variables.scss';
+.loading{
+    font-size: 5rem;
+    color: $mainColor;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    background-color: rgba(#fff,.3);
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blur{
+    filter: blur(3px)
+}
 .repoModal{
     position: fixed;
     background-color: rgba(0,0,0, .8);
