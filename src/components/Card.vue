@@ -15,7 +15,7 @@
         </div>
      </div>
      <div class="itemCard__footer">
-         <button class="itemCard__btn">
+         <button class="itemCard__btn" @click="selectRepo(data)">
            <i class="far fa-eye"> </i> View repositorie
          </button>
      </div>
@@ -26,11 +26,13 @@
 export default {
   name: 'Card',
   props:['data'],
-  mounted(){},
   methods:{
       getdate(date){
           let cutDate = date.split('T');
           return cutDate[0]
+      },
+      selectRepo(repo){
+        this.$store.commit('setSelectRepo', repo)
       }
   }
 }

@@ -5,19 +5,25 @@
           <Card :data="repo" ></Card>
         </div>
       </div>
+      <Modal v-if="selectRepo"></Modal>
   </section>
 </template>
 
 <script>
 import Card from "./Card"
+import Modal from "./Modal"
 export default {
   name: 'Container',
   components:{
-    Card
+    Card,
+    Modal
   },
   computed:{
     reposList(){
       return this.$store.state.repos
+    },
+    selectRepo(){
+      return this.$store.state.selectedRepo
     }
   },
   mounted(){
